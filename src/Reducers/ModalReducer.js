@@ -3,16 +3,26 @@ const initState = {
     modalMode: null
 }
 
-const ModalReducer = (state = initState, action) => {
-  console.log(action);
-    if(action.type === 'CONTROL_MODAL') {
-        return {
-            ...state,
-            modalIsOpen: action.behavior,
-            modalMode: action.mode
-        }
+const modalReducer = (state = initState, action) => {
+    switch(action.type) {
+        case 'CONTROL_MODAL':
+            return {
+                ...state,
+                modalIsOpen: action.behavior,
+                modalMode: action.mode
+            }
+        case 'LOGIN_SUCCESS':
+            return {
+                ...state,
+                modalIsOpen: false
+            }
+        default:
+            return {
+               state
+            }
     }
-    return state;
+    
+    
 }
 
-export default ModalReducer;
+export default modalReducer;

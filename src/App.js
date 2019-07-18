@@ -4,19 +4,8 @@ import React, { Component } from 'react';
 import './App.css';
 
 import ModalUI from './Components/Modal/index';
-import AccountHeader from './Components/Account/AccountHeader';
+import AccountHeader from './Components/Account/accountHeader';
 
-// function Index() {
-//     return <h2>Home</h2>;
-//   }
-  
-//   function About() {
-//     return <h2>About</h2>;
-//   }
-  
-//   function Users() {
-//     return <h2>Users</h2>;
-//   }
 
 class App extends Component {
     state = {  }
@@ -25,17 +14,6 @@ class App extends Component {
         return ( 
             <React.Fragment>
                 <AccountHeader></AccountHeader>
-                {/* <Router>
-                     <nav>
-                        <ul>
-                            <li>
-                            <Link to="/">Home</Link>
-                            </li>
-                        </ul>
-                    </nav>
-                    https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/
-                    <Route path="/" exact component={Index} /> 
-                </Router> */}
                 <ModalUI></ModalUI>
             </React.Fragment>
          );

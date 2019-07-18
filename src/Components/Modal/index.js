@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 
 import { connect } from 'react-redux';
+import { modalAction } from '../../Reducers/actions/modalAction';
+
+import LoginForm from '../Authentication/loginForm';
 
 const customStyles = {
     content : {
@@ -19,20 +22,14 @@ Modal.setAppElement(document.getElementById('root'));
 class ModalUI extends Component {
     constructor() {
         super();
-        this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
       }
-     
-      afterOpenModal() {
-        this.subtitle.style.color = '#f00';
-      }
-     
+    
       closeModal() {
           this.props.closeModal(false);
       }
 
       render() {
-
         return (
           <div>
             <Modal
@@ -40,15 +37,9 @@ class ModalUI extends Component {
               onAfterOpen={this.afterOpenModal}
               onRequestClose={this.closeModal}
               style={customStyles}
-              contentLabel="Example Modal"
             >
-     
-              <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-              <button onClick={this.closeModal}>close</button>
-              <div>I am a modal</div>
-              <form>
-                {this.props.modalMode}
-              </form>
+            <button onClick={this.closeModal}>x</button>
+                <div>{<LoginForm></LoginForm>}</div>
             </Modal>
           </div>
         );
@@ -57,14 +48,14 @@ class ModalUI extends Component {
 
 const mapStateToProps = (state) => {
     return {  
-      modalIsOpen: state.modalIsOpen,
-      modalMode: state.modalMode
+      modalIsOpen: state.modalReducer.modalIsOpen,
+      modalMode: state.modalReducer.modalMode
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      closeModal: (behavior) => { dispatch({ type: 'CONTROL_MODAL', behavior: behavior }) }
+      closeModal: (behavior) => { dispatch( modalAction(behavior, null) ) }
   }
 }
 

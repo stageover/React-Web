@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './AccountHeader.scss';
 import { connect } from 'react-redux';
+import { modalAction } from '../../Reducers/actions/modalAction';
+import { signOut } from '../../Reducers/actions/authActions';
 
 class AccountHeader extends Component {
     
@@ -9,24 +11,44 @@ class AccountHeader extends Component {
         this.props.openModal(true, mode);
     }
 
-    render() { 
+    handleLogout = (e) => {
+        e.preventDefault();
+        this.props.signOut();
+    }
+
+    render() {
+        console.log(this.props.loginStatus);
+        let data = (this.props.loginStatus === false) ? 
+                <ul>
+                    <li><a href="#login" onClick={(e) => this.handleClick(e, 'login')}>Login</a></li>
+                    <li><a href="#signup" onClick={(e) => this.handleClick(e, 'signup')}>SignUp</a></li>
+                </ul>
+            : 
+                <ul>
+                    <li><a href="#logout" onClick={(e) => this.handleLogout(e)}>Logout</a></li>
+                </ul>
+            ;
         return (
             <div className="account-navigation-area">
                 <div className="container">
-                    <ul>
-                        <li><a href="#login" onClick={(e) => this.handleClick(e, 'login')}>Login</a></li>
-                        <li><a href="#signup" onClick={(e) => this.handleClick(e, 'signup')}>SignUp</a></li>
-                    </ul>
+                   {data}     
                 </div>
             </div>
         );
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        loginStatus: state.authReducer.loginStatus
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        openModal: (behavior, mode) => { dispatch({ type: 'CONTROL_MODAL', behavior: behavior, mode: mode }) }
+        openModal: (behavior, mode) => { dispatch(modalAction(behavior, mode)) },
+        signOut: () => { dispatch(signOut()) }
     }
 }
  
-export default connect(null, mapDispatchToProps)(AccountHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountHeader);
