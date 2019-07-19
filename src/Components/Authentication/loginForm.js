@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { signIn } from '../../Reducers/actions/authActions';
+import { loginAction }  from '../../Reducers/actions/authAction';
 
 const INITIAL_STATE = {
     email: '',
@@ -21,6 +21,7 @@ class LoginForm extends Component {
             password: this.state.password
         }
         this.props.submitForm(credentials);
+        
     }
 
     render() { 
@@ -38,7 +39,7 @@ class LoginForm extends Component {
                     onChange={this.onChange}
                     type="email"
                     placeholder="Email Address"
-                    autoComplete="off"
+                    autoComplete="on"
                     />
                 </div>
                 <div>
@@ -67,7 +68,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        submitForm: (credentials) => { dispatch(signIn(credentials)) }
+        submitForm: (credentials) => { dispatch(loginAction(credentials)) }
     }
 }
  

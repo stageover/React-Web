@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 
 import { connect } from 'react-redux';
-import { modalAction } from '../../Reducers/actions/modalAction';
 
 import LoginForm from '../Authentication/loginForm';
 
@@ -38,7 +37,7 @@ class ModalUI extends Component {
               onRequestClose={this.closeModal}
               style={customStyles}
             >
-            <button onClick={this.closeModal}>x</button>
+                <a href="#close" onClick={this.closeModal}>x</a>
                 <div>{<LoginForm></LoginForm>}</div>
             </Modal>
           </div>
@@ -55,7 +54,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      closeModal: (behavior) => { dispatch( modalAction(behavior, null) ) }
+      closeModal: (behavior) => { dispatch( { 
+          type: 'CONTROL_MODAL',
+          behavior,
+          mode : null
+        } ) 
+      }
   }
 }
 

@@ -3,29 +3,39 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+/* Redux Saga */
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import createSagaMiddleware from 'redux-saga';
 
+/* Firebase */
+
+import { reactReduxFirebase } from 'react-redux-firebase';
 import firebaseconfig from './Firebase/firebaseconfig';
 
-import rootReducer from './Reducers/rootReducer';
+/* Reducer */
+import rootReducer from './Reducers/store/rootReducer';
 
-const store = createStore(rootReducer, 
-    compose(
-        applyMiddleware(thunk.withExtraArgument({getFirebase})),
-        reactReduxFirebase(firebaseconfig)
+/* Sagas */
+import watchAll from './Sagas/index';
+
+const sagaMiddleware = createSagaMiddleware()
+
+const store = createStore(
+  rootReducer,
+  compose(
+    applyMiddleware(sagaMiddleware),
+    reactReduxFirebase(firebaseconfig)
     )
 );
+
+sagaMiddleware.run(watchAll);
 
 ReactDOM.render(
         <Provider store={store}>
             <App />
-        </Provider>
-,document.getElementById('root'));
+        </Provider>,
+document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+
 serviceWorker.unregister();

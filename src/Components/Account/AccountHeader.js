@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './AccountHeader.scss';
 import { connect } from 'react-redux';
 import { modalAction } from '../../Reducers/actions/modalAction';
-import { signOut } from '../../Reducers/actions/authActions';
+
 
 class AccountHeader extends Component {
     
@@ -17,7 +17,6 @@ class AccountHeader extends Component {
     }
 
     render() {
-        console.log(this.props.loginStatus);
         let data = (this.props.loginStatus === false) ? 
                 <ul>
                     <li><a href="#login" onClick={(e) => this.handleClick(e, 'login')}>Login</a></li>
@@ -47,7 +46,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         openModal: (behavior, mode) => { dispatch(modalAction(behavior, mode)) },
-        signOut: () => { dispatch(signOut()) }
+        // signOut: () => { dispatch(signOut()) }
     }
 }
  

@@ -5,10 +5,9 @@ import { combineReducers } from 'redux';
 import { firebaseReducer } from 'react-redux-firebase';
 
 const rootReducer = combineReducers({
-    authReducer: authReducer,
-    modalReducer: modalReducer,
+    authReducer,
+    modalReducer,
     firebase: firebaseReducer
 });
 
 export default rootReducer;
-
