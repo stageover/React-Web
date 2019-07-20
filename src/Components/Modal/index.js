@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 
 import LoginForm from '../Authentication/loginForm';
+import { modalAction } from '../../Reducers/actions/modalAction';
 
 const customStyles = {
     content : {
@@ -54,11 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      closeModal: (behavior) => { dispatch( { 
-          type: 'CONTROL_MODAL',
-          behavior,
-          mode : null
-        } ) 
+      closeModal: (behavior) => { dispatch( modalAction(behavior) ) 
       }
   }
 }

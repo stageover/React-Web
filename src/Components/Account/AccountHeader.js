@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         openModal: (behavior, mode) => { dispatch(modalAction(behavior, mode)) },
-        // signOut: () => { dispatch(signOut()) }
+        // signOut: () => { dispatch(signOut()) } 
     }
 }
  
