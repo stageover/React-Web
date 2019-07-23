@@ -35,7 +35,7 @@ export function* signOutMethod() {
 }
 
 export function* signupMethod (userdetails) {
-    alert('test');
+
     try {
         yield call(
           reduxSagaFirebase.auth.createUserWithEmailAndPassword,
@@ -47,7 +47,7 @@ export function* signupMethod (userdetails) {
           phoneNumber: userdetails.user.phonenumber
         });
         yield put({ type: 'SIGNUP_SUCCESS_START' });
-        yield delay(1500);
+        yield delay(2000);
         yield put({ type: 'SIGNUP_SUCCESS_CLOSE' });
       } catch (error) {
         const error_message = { code: error.code, message: error.message };
