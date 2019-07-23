@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import './AccountHeader.scss';
 import { connect } from 'react-redux';
 import { modalAction } from '../../Reducers/actions/modalAction';
+import { signOutAction } from '../../Reducers/actions/authAction';
 
 
 class AccountHeader extends Component {
     
-    handleClick = (e, mode) => {
+    handleClick = (e, mode, title) => {
         e.preventDefault();
-        this.props.openModal(true, mode);
+        this.props.openModal(true, mode, title);
     }
 
     handleLogout = (e) => {
@@ -17,10 +18,10 @@ class AccountHeader extends Component {
     }
 
     render() {
-        let data = (this.props.loginStatus === false) ? 
+        let data = (this.props.userAuth === null) ? 
                 <ul>
-                    <li><a href="#login" onClick={(e) => this.handleClick(e, 'login')}>Login</a></li>
-                    <li><a href="#signup" onClick={(e) => this.handleClick(e, 'signup')}>SignUp</a></li>
+                    <li><a href="#login" onClick={(e) => this.handleClick(e, 'login', 'Login')}>Login</a></li>
+                    <li><a href="#signup" onClick={(e) => this.handleClick(e, 'signup', 'Register')}>SignUp</a></li>
                 </ul>
             : 
                 <ul>
@@ -39,14 +40,14 @@ class AccountHeader extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginStatus: state.authReducer.loginStatus
+        userAuth: state.authReducer.userAuth
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        openModal: (behavior, mode) => { dispatch(modalAction(behavior, mode)) },
-        // signOut: () => { dispatch(signOut()) } 
+        openModal: (behavior, mode, title) => { dispatch(modalAction(behavior, mode, title)) },
+        signOut: () => { dispatch(signOutAction()) } 
     }
 }
  

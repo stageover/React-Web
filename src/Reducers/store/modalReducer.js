@@ -1,34 +1,29 @@
 const initState = {
     modalIsOpen: false,
     modalMode: null,
-    user: null
+    modalTitle: null
 }
 
 const modalReducer = (state = initState, action) => {
-    console.log(action);
     switch(action.type) {
         case 'CONTROL_MODAL':
             return {
                 ...state,
                 modalIsOpen: action.behavior,
-                modalMode: action.mode
+                modalMode: action.mode,
+                modalTitle: action.title
             }
         case 'LOGIN_SUCCESS':
+        case 'SIGNUP_SUCCESS':
+        case 'SIGNUP_SUCCESS_CLOSE':
             return {
                 ...state,
                 modalIsOpen: false,
-                user: action.user
-            }
-        case 'LOGIN_ERROR':
-        case 'LOGIN':
-                return {
-                    ...state,
-                    modalIsOpen: true
+                modalMode: null,
+                modalTitle: null
             }
         default:
-            return {
-               state
-            }
+            return state
     }
     
     

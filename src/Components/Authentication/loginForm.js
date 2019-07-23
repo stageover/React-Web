@@ -1,61 +1,75 @@
 import React, { Component } from 'react';
+
+import './loginForm.scss';
+
 import { connect } from 'react-redux';
 import { loginAction }  from '../../Reducers/actions/authAction';
 
-const INITIAL_STATE = {
-    email: '',
-    password: ''
-};
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
-class LoginForm extends Component {
-    state = { ...INITIAL_STATE }
+class AuthForm extends Component {
 
-    onChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+        if (!err) {
+            this.props.submitForm(values);
+        }
+        });
     };
 
-    onSubmit = event => {
-        event.preventDefault();
-        const credentials = {
-            email: this.state.email,
-            password: this.state.password
-        }
-        this.props.submitForm(credentials);
-        
-    }
-
-    render() { 
-
-        const { email, password } = this.state;
-        const isInvalid = password === '' || email === '';
-        let error = (this.props.error);
-
+    render() {
+        const { getFieldDecorator } = this.props.form;
         return (
-            <form onSubmit={this.onSubmit}>
-                <div>
-                    <input
-                    name="email"
-                    value={email}
+        <Form onSubmit={this.handleSubmit} className="login-form" id="RegisterComponent">
+            <Form.Item>
+                {getFieldDecorator('email', {
+                rules: [
+                    {
+                    type: 'email',
+                    message: 'The input is not valid E-mail!',
+                    },
+                    {
+                    required: true,
+                    message: 'Please input your E-mail!',
+                    },
+                ],
+                })(
+                <Input
+                    prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="E-Mail"
                     onChange={this.onChange}
-                    type="email"
-                    placeholder="Email Address"
                     autoComplete="on"
-                    />
-                </div>
-                <div>
-                    <input
-                    name="password"
-                    value={password}
-                    onChange={this.onChange}
-                    type="password"
+                />
+                )}
+            </Form.Item>
+            <Form.Item>
+            {getFieldDecorator('password', {
+                rules: [{ required: true, message: 'Please input your Password!' }],
+            })(
+                <Input
+                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                     placeholder="Password"
+                    type="password"
                     autoComplete="off"
-                    />
-                </div>
-
-                <button disabled={isInvalid} type="submit">Sign In</button>
-                <p>{ error }</p>
-            </form>
+                />,
+            )}
+            </Form.Item>
+            <Form.Item>
+                {getFieldDecorator('remember', {
+                    valuePropName: 'checked',
+                    initialValue: true,
+                })(<Checkbox>Remember me</Checkbox>)}
+                <a className="login-form-forgot" href="#forgot-password">
+                    Forgot password
+                </a>
+                <Button type="primary" htmlType="submit" className="login-form-button">
+                    Log in
+                </Button>
+                Or <a href="#signup">register now!</a>
+            </Form.Item>
+            {this.props.error}
+        </Form>
         );
     }
 }
@@ -71,5 +85,7 @@ const mapDispatchToProps = (dispatch) => {
         submitForm: (credentials) => { dispatch(loginAction(credentials)) }
     }
 }
+
+const LoginForm = Form.create({ name: 'normal_login' })(AuthForm);
  
 export default connect(mapStateToProps,mapDispatchToProps)(LoginForm);

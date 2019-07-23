@@ -4,14 +4,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 /* Redux Saga */
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-
-/* Firebase */
-
-import { reactReduxFirebase } from 'react-redux-firebase';
-import firebaseconfig from './Firebase/firebaseconfig';
 
 /* Reducer */
 import rootReducer from './Reducers/store/rootReducer';
@@ -23,10 +18,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
   rootReducer,
-  compose(
-    applyMiddleware(sagaMiddleware),
-    reactReduxFirebase(firebaseconfig)
-    )
+  applyMiddleware(sagaMiddleware)
 );
 
 sagaMiddleware.run(watchAll);

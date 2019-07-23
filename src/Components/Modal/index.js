@@ -1,55 +1,70 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal';
 
 import { connect } from 'react-redux';
 
 import LoginForm from '../Authentication/loginForm';
+import SignupForm from '../Authentication/signupForm';
 import { modalAction } from '../../Reducers/actions/modalAction';
 
-const customStyles = {
-    content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)'
+import { Modal, Form } from 'antd';
+
+const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
+
+  class extends Component {
+
+    handleForm(mode) {
+      switch(mode) {
+          case 'login':
+           return <LoginForm></LoginForm>
+          case 'signup':
+           return <SignupForm></SignupForm>
+          default :
+            return 'Modal'
+      } 
     }
-};
-   
-Modal.setAppElement(document.getElementById('root'));
+
+    render() {
+      
+      const { visible, onCancel, mode, title } = this.props;
+      return (
+        <Modal
+          visible={visible}
+          title={title}
+          onCancel={onCancel}
+          footer={null}
+        >
+          { this.handleForm(mode) }
+        </Modal>
+      );
+    }
+  },
+);
 
 class ModalUI extends Component {
-    constructor() {
-        super();
-        this.closeModal = this.closeModal.bind(this);
-      }
-    
-      closeModal() {
-          this.props.closeModal(false);
-      }
 
-      render() {
-        return (
-          <div>
-            <Modal
-              isOpen={this.props.modalIsOpen}
-              onAfterOpen={this.afterOpenModal}
-              onRequestClose={this.closeModal}
-              style={customStyles}
-            >
-                <a href="#close" onClick={this.closeModal}>x</a>
-                <div>{<LoginForm></LoginForm>}</div>
-            </Modal>
-          </div>
-        );
-    }
+  handleCancel = () => {
+    this.props.closeModal(false);
+  };
+
+  render() {
+    return (
+      <div>
+        <CollectionCreateForm
+          visible={this.props.modalIsOpen}
+          onCancel={this.handleCancel}
+          mode={this.props.modalMode}
+          title={this.props.modalTitle}
+        />
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) => { 
     return {  
       modalIsOpen: state.modalReducer.modalIsOpen,
-      modalMode: state.modalReducer.modalMode
+      modalMode: state.modalReducer.modalMode,
+      modalTitle: state.modalReducer.modalTitle
     }
 }
 

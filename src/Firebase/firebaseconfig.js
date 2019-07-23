@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import ReduxSagaFirebase from 'redux-saga-firebase'
 
 const prodConfig = {
     apiKey:             process.env.REACT_APP_PROD_API_KEY,
@@ -22,6 +23,5 @@ const devConfig = {
 const config =
   process.env.NODE_ENV === 'development' ? devConfig : prodConfig;
 
-firebase.initializeApp(config);
-
-export default firebase;
+const myFirebaseApp = firebase.initializeApp(config);
+export const reduxSagaFirebase = new ReduxSagaFirebase(myFirebaseApp);
