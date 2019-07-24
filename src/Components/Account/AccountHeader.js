@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './AccountHeader.scss';
 import { connect } from 'react-redux';
-import { modalAction } from '../../Reducers/actions/modalAction';
+import { modalOpenAction } from '../../Reducers/actions/modalAction';
 import { signOutAction } from '../../Reducers/actions/authAction';
 
 
@@ -9,7 +9,7 @@ class AccountHeader extends Component {
     
     handleClick = (e, mode, title) => {
         e.preventDefault();
-        this.props.openModal(true, mode, title);
+        this.props.modalOpen(mode, title);
     }
 
     handleLogout = (e) => {
@@ -18,16 +18,18 @@ class AccountHeader extends Component {
     }
 
     render() {
+   
         let data = (this.props.userAuth === null) ? 
-                <ul>
-                    <li><a href="#login" onClick={(e) => this.handleClick(e, 'login', 'Login')}>Login</a></li>
-                    <li><a href="#signup" onClick={(e) => this.handleClick(e, 'signup', 'Register')}>SignUp</a></li>
-                </ul>
-            : 
-                <ul>
-                    <li><a href="#logout" onClick={(e) => this.handleLogout(e)}>Logout</a></li>
-                </ul>
-            ;
+            <ul>
+                <li><a href="#login" onClick={(e) => this.handleClick(e, 'login', 'Login')}>Login</a></li>
+                <li><a href="#signup" onClick={(e) => this.handleClick(e, 'signup', 'Register')}>SignUp</a></li>
+            </ul>
+        : 
+            <ul>
+                { this.props.userAuth.user ? <li><a href="#profile">{this.props.userAuth.user.displayName}</a></li>: ''}
+                <li><a href="#logout" onClick={(e) => this.handleLogout(e)}>Logout</a></li>
+            </ul>
+        ;
         return (
             <div className="account-navigation-area">
                 <div className="container">
@@ -46,7 +48,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        openModal: (behavior, mode, title) => { dispatch(modalAction(behavior, mode, title)) },
+        modalOpen: (mode, title) => { dispatch(modalOpenAction(mode, title)) },
         signOut: () => { dispatch(signOutAction()) } 
     }
 }

@@ -6,16 +6,14 @@ const initState = {
 
 const modalReducer = (state = initState, action) => {
     switch(action.type) {
-        case 'CONTROL_MODAL':
+        case 'MODAL_OPEN':
             return {
                 ...state,
-                modalIsOpen: action.behavior,
+                modalIsOpen: true,
                 modalMode: action.mode,
                 modalTitle: action.title
             }
-        case 'LOGIN_SUCCESS':
-        case 'SIGNUP_SUCCESS':
-        case 'SIGNUP_SUCCESS_CLOSE':
+        case 'MODAL_CLOSE':
             return {
                 ...state,
                 modalIsOpen: false,

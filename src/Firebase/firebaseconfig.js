@@ -20,8 +20,12 @@ const devConfig = {
     messagingSenderId:  process.env.REACT_APP_DEV_MESSAGING_SENDER_ID,
 };
 
+
 const config =
   process.env.NODE_ENV === 'development' ? devConfig : prodConfig;
-
 const myFirebaseApp = firebase.initializeApp(config);
+
+
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+export const facebookProvider = new firebase.auth.FacebookAuthProvider();
 export const reduxSagaFirebase = new ReduxSagaFirebase(myFirebaseApp);

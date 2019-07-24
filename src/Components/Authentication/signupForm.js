@@ -9,6 +9,7 @@ import {
     Icon,
     Select,
     Button,
+    Alert
   } from 'antd';
   
   const { Option } = Select;
@@ -152,7 +153,11 @@ import {
               Register
             </Button>
           </Form.Item>
-          {this.props.success}
+          { this.props.success ? 
+              <Alert message={this.props.success} type="success" /> :
+            this.props.error ?
+              <Alert message={this.props.error} type="error" /> : ''
+          }
         </Form>
       );
     }

@@ -1,8 +1,13 @@
-export const modalAction = (behavior, mode, title) => {
+export const modalOpenAction = (mode, title) => {
     return { 
-        type: 'CONTROL_MODAL',
-        behavior,
+        type: 'MODAL_OPEN',
         mode,
         title
+    }
+}
+
+export const modalCloseAction = () => {
+    return { 
+        type: 'MODAL_CLOSE'
     }
 }

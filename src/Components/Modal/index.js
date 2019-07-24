@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 import LoginForm from '../Authentication/loginForm';
 import SignupForm from '../Authentication/signupForm';
-import { modalAction } from '../../Reducers/actions/modalAction';
+import ForgotPasswordForm from '../Authentication/forgotPasswordForm';
+
+import { modalCloseAction } from '../../Reducers/actions/modalAction';
 
 import { Modal, Form } from 'antd';
 
@@ -18,6 +20,8 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
            return <LoginForm></LoginForm>
           case 'signup':
            return <SignupForm></SignupForm>
+          case 'forgot-password':
+            return <ForgotPasswordForm></ForgotPasswordForm>
           default :
             return 'Modal'
       } 
@@ -43,7 +47,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
 class ModalUI extends Component {
 
   handleCancel = () => {
-    this.props.closeModal(false);
+    this.props.modalClose();
   };
 
   render() {
@@ -70,7 +74,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      closeModal: (behavior) => { dispatch( modalAction(behavior) ) 
+      modalClose: () => { dispatch( modalCloseAction() ) 
       }
   }
 }

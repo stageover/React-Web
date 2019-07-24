@@ -18,9 +18,28 @@ export const signupAction = (userdetails) => {
     }
 }
 
+export const sendPasswordResetEmailAction = (userdetails) => {
+    return {
+        type: 'SEND_PASSWORD_RESET_EMAIL_START',
+        user: userdetails
+    }
+}
+
 export const signOutAction = () => {
     return {
         type: 'SIGNOUT_START'
     }
 }
 
+export const loginSocialAction = (mode) => {
+    return {
+        type: 'LOGIN_SOCIAL_START',
+        mode
+    }
+}
+
+export const removeAlertsOnChange = () => {
+    return {
+        type: 'REMORE_ALERTS_ON_CHANGE'
+    }
+}
